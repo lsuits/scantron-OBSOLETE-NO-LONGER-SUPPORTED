@@ -151,7 +151,7 @@ $tpl_data = array(
     'exam_select' => $exam_select,
     'is_teacher' => $is_teacher,
     'student_select' => $student_select,
-    'error_str' => $OUTPUT->notification($error_str),
+    'error_str' => $error_str ? $OUTPUT->notification($error_str) : null,
     'form_facsimile' => $form_facsimile
 );
 
