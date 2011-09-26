@@ -18,7 +18,7 @@ $string['key_file'] = 'Key File';
 $string['files'] = 'Uploaded Files';
 $string['grade_item'] = 'Grade Item';
 $string['student_file'] = 'Student File';
-$string['upload_success'] = 'Successfully uploaded scantron for $a';
+$string['upload_success'] = 'Successfully uploaded scantron for {$a}';
 $string['no_files'] = 'You have not uploaded any Scantron files yet';
 $string['input_error'] = 'You must provide a Key File, a Students File, and a Grade Item';
 $string['no_items'] = 'This course has no scantron-associatable grade items, so you cannot upload any new scantron files';
@@ -34,7 +34,7 @@ $string['no_exam_selected'] = 'Please select an exam';
 $string['no_student_selected'] = 'Please select a student';
 $string['neither_selected'] = 'Please select an exam and a student';
 $string['no_exams'] = 'Scantron data has not yet been uploaded for this course';
-$string['no_answers_for_student'] = '$a->fullname has no scantron data for $a->itemname';
+$string['no_answers_for_student'] = '{$a->fullname} has no scantron data for {$a->itemname}';
 
 // Strings for delete.php
 $string['delete_exam'] = 'Delete Exam';
