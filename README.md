@@ -1,10 +1,7 @@
 # Scantron
 
-Scantron is a Moodle block that provides certain roles the ability to search enrollments across courses or for an individual.
-
-## Features
-
-* See an imported Scantron file "as it were" in real life.
+Scantron is a Moodle block that provides instructors the ability to import scantron
+answer keys and data exports, and display the scantron as it were in real life.
 
 ## Download
 
@@ -24,9 +21,9 @@ File any bugs, improvements, or feature requiests in our [issue tracker][issues]
 
 ## License
 
-Helpdesk adopts the same license that Moodle does.
+Scantron adopts the same license that Moodle does.
 
 [quick_template]: https://github.com/lsuits/quick_template
 [scantron_github]: https://github.com/lsuits/scantron
 [block_doc]: http://docs.moodle.org/20/en/Installing_contributed_modules_or_plugins#Block_installation
-[issues]: https://github.com/lsuits/helpdesk/issues
+[issues]: https://github.com/lsuits/scantron/issues
