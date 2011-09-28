@@ -27,12 +27,20 @@
     text-align:     center;
 }
 
+#page-blocks-scantron-manage table.generaltable {
+    padding: 0;
+    margin: 20px auto;
+    border: 1px solid #cecece;
+    box-shadow: 0 0 10px #bbb;
+}
+
 table.scantron, .scantron_key {
     font-size: 10px;
     border-collapse: collapse;
     padding: 0;
-    margin: 20px auto auto 20px;
+    margin: 20px auto auto auto;
     border: 1px solid #cecece;
+    box-shadow: 0 0 10px #bbb;
 }
 
 .scinvisitext {
@@ -194,11 +202,7 @@ table.scantron, .scantron_key {
 }
 
 div.scantron_key {
-    margin: auto auto auto 20px;
-    border-right: 1px solid #cecece;
-    border-bottom: 1px solid #cecece;
-    border-left: 1px solid #cecece;
-    border-top: none;
+    margin: 10px auto 20px auto;
     width: 51em;
     background: transparent url(../blocks/scantron/images/background.jpg) center -415px no-repeat;
 }
