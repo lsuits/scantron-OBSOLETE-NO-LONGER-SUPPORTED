@@ -1,7 +1,5 @@
 <?php
 
-require_once('../../lib/lsulib.php');
-
 abstract class ScantronFile {
     function __construct($filename) {
         $this->lines = file($filename);
