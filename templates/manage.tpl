@@ -1,4 +1,4 @@
-{if $upload_success}
+{if !empty($upload_success)}
     <br />
     <div id = 'block_scantron_upload_success'>
         {$success_str}

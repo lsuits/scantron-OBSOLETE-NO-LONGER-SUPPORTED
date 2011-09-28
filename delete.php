@@ -85,6 +85,6 @@ $tpl_data = array(
     'confirm_str' => $confirm_str,
 );
 
-quick_render('delete.tpl', $tpl_data, 'block_scantron');
+quick_template::render('delete.tpl', $tpl_data, 'block_scantron');
 
 echo $OUTPUT->footer();
