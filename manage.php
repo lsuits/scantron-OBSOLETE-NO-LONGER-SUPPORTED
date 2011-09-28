@@ -177,6 +177,6 @@ if ($exams) {
 // Print page template and footer
 //
 
-quick_render('manage.tpl', $tpl_data, 'block_scantron');
+quick_template::render('manage.tpl', $tpl_data, 'block_scantron');
 
 echo $OUTPUT->footer();
