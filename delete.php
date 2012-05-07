@@ -1,7 +1,7 @@
 <?php
 
 require_once('../../config.php');
-require_once($CFG->libdir . '/quick_template.php');
+require_once($CFG->libdir . '/quick_template/lib.php');
 
 //
 // Validate params and user
