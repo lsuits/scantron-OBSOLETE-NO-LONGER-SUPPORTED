@@ -155,6 +155,6 @@ $tpl_data = array(
     'form_facsimile' => $form_facsimile
 );
 
-quick_template::render('view.tpl', $tpl_data, 'block_scantron');
+quick_template::render('scantron_view.tpl', $tpl_data, 'block_scantron');
 
 echo $OUTPUT->footer();
