@@ -1,7 +1,6 @@
 <?php
 
 require_once('../../config.php');
-require_once($CFG->libdir . '/quick_template/lib.php');
 
 //
 // Validate params and user
@@ -79,12 +78,23 @@ $confirm_str = $_s('confirm_delete', $itemname);
 // Print page template and footer
 //
 
-$tpl_data = array(
-    'examid' => $examid,
-    'courseid' => $courseid,
-    'confirm_str' => $confirm_str,
-);
-
-quick_template::render('scantron_delete.tpl', $tpl_data, 'block_scantron');
+echo html_writer::start_tag('div', array('id' => 'block_scantron_delete_confirm'));
+echo html_writer::tag('form',
+    $confirm_str .
+    '<br />' .
+    '<br />' .
+    html_writer::empty_tag('input', array(
+        'type' => 'hidden',
+        'name' => 'delete_confirm',
+        'value' => 'true'
+    )) .
+    html_writer::empty_tag('input', array(
+        'type' => 'submit',
+        'value' => $_s('delete')
+    )), array(
+        'action' => 'delete.php?id=' . $courseid . '&examid=' . $examid,
+        'method' => 'POST'
+    ));
+echo html_writer::end_tag('div');
 
 echo $OUTPUT->footer();

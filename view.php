@@ -1,8 +1,6 @@
 <?php
 
 require_once('../../config.php');
-require_once($CFG->libdir . '/quick_template/lib.php');
-
 require_once('lib.php');
 
 //
@@ -136,8 +134,9 @@ if (!$error_str) {
 
         $error_str = $_s('no_answers_for_student', $a);
     } else {
-        $form_facsimile = generate_form_facsimile($param_examid, $param_userid,
-                                                  $courseid);
+        $form_facsimile = generate_form_facsimile(
+            $param_examid, $param_userid, $courseid
+        );
     }
 }
 
@@ -145,16 +144,62 @@ if (!$error_str) {
 // Print page markup and footer
 //
 
-$tpl_data = array(
-    'exam_options' => $exam_options,
-    'courseid' => $courseid,
-    'exam_select' => $exam_select,
-    'is_teacher' => $is_teacher,
-    'student_select' => $student_select,
-    'error_str' => $error_str ? $OUTPUT->notification($error_str) : null,
-    'form_facsimile' => $form_facsimile
-);
+if ($exam_options) {
+    echo html_writer::start_tag('div', array('id' => 'block_scantron_select_row'));
+    echo html_writer::start_tag('form', array(
+        'method' => 'POST', 'action' => 'view.php?id=' . $courseid
+    ));
 
-quick_template::render('scantron_view.tpl', $tpl_data, 'block_scantron');
+    echo $_s('exam') . ': ' . $exam_select;
+
+    if ($is_teacher) {
+        echo $_s('student') . ': ' . $student_select;
+    }
+
+    echo html_writer::empty_tag('input', array(
+        'type' => 'submit',
+        'value' => $_s('view')
+    ));
+
+    echo html_writer::end_tag('form');
+    echo html_writer::end_tag('div');
+    echo "<br />";
+} else {
+    echo html_writer::tag('div', $_s('no_exams'), array(
+        'id' => 'block_scantron_view_error'
+    ));
+}
+
+if ($error_str) {
+    echo $OUTPUT->notification($error_str);
+} else {
+    $inivis = array('class' => 'scinvisitext');
+
+    echo $form_facsimile;
+    echo html_writer::tag('div',
+        html_writer::tag('ul',
+        html_writer::tag('p', 'Key', $inivis) .
+        html_writer::tag('li',
+            html_writer::tag('span', 'Blank Cell: ', $inivis) .
+            'Unmarked Answer'
+        ) .
+        html_writer::tag('li',
+            html_writer::tag('span', 'Letter: ', $inivis) .
+            'Correct Student Response',
+            array('class' => 'correct_response')
+        ) .
+        html_writer::tag('li',
+            html_writer::tag('span', 'Exclamation Mark: ', $inivis) .
+            'Correct Answer',
+            array('class' => 'correct_answer')
+        ) .
+        html_writer::tag('li',
+            html_writer::tag('span', 'Strikethrough: ', $inivis) .
+            'Incorrect Student Response',
+            array('class' => 'incorrect_response')
+        )),
+        array('class' => 'scantron_key')
+    );
+}
 
 echo $OUTPUT->footer();

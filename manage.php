@@ -2,7 +2,6 @@
 
 require_once('../../config.php');
 require_once($CFG->libdir . '/uploadlib.php');
-require_once($CFG->libdir . '/quick_template/lib.php');
 
 require_once('lib.php');
 
@@ -18,9 +17,6 @@ require_login($course);
 $context = get_context_instance(CONTEXT_COURSE, $courseid);
 
 require_capability('moodle/course:update', $context, $USER->id);
-
-$tpl_data = array();
-$tpl_data['courseid'] = $courseid;
 
 //
 // Process form data if it was submitted
@@ -87,8 +83,6 @@ if ($form_data) {
     }
 
     $upload_success = true;
-    $tpl_data['upload_success'] = $upload_success;
-
     $success_itemid = $exam->itemid;
 }
 
@@ -119,13 +113,10 @@ $items = $DB->get_records_select_menu('grade_items', $where, array(), '', 'id, i
 if ($upload_success) {
     $itemname = $items[$success_itemid];
 
-    $tpl_data['success_str'] = $_s('upload_success', $itemname);
-
+    $success_str = $_s('upload_success', $itemname);
 }
 
 $exams = $DB->get_records('block_scantron_exams', array('courseid' => $courseid));
-
-$tpl_data['exams'] = $exams;
 
 $taken_items = array();
 
@@ -137,12 +128,10 @@ if ($exams) {
     }
 }
 
-$tpl_data['items'] = $items;
-
 $select_options = array();
 
 if ($items) {
-    $tpl_data['item_select'] = html_writer::select($items, 'itemid');
+    $item_select  = html_writer::select($items, 'itemid');
 }
 
 if ($exams) {
@@ -170,13 +159,63 @@ if ($exams) {
         $files_table->data[] = $row;
     }
 
-    $tpl_data['files_table_src'] = html_writer::table($files_table, true);
+    $files_table_src = html_writer::table($files_table, true);
 }
 
 //
 // Print page template and footer
 //
 
-quick_template::render('scantron_manage.tpl', $tpl_data, 'block_scantron');
+if (!empty($upload_success)) {
+    echo "<br />";
+    echo html_writer::tag('div', $success_str, array(
+        'id' => 'block_scantron_upload_success'
+    ));
+}
+
+if ($items) {
+    echo "<br />";
+    echo html_writer::start_tag('div', array('id' => 'block_scantron_upload'));
+    echo html_writer::tag('form',
+        html_writer::empty_tag('input', array(
+            'type' => 'hidden',
+            'name' => 'MAX_FILE_SIZE',
+            'value' => '1000000'
+        )) .
+        $_s('key_file') . ': ' . html_writer::empty_tag('input', array(
+            'type' => 'file',
+            'name' => 'key_file'
+        )) .
+        $_s('student_file') . ': ' . html_writer::empty_tag('input', array(
+            'type' => 'file',
+            'name' => 'students_file'
+        )) .
+        $_s('grade_item') . ': ' . $item_select .
+        html_writer::empty_tag('input', array(
+            'type' => 'submit',
+            'value' => $_s('upload')
+        )), array(
+            'action' => 'manage.php?id=' . $courseid,
+            'enctype' => 'multipart/form-data',
+            'method' => 'POST'
+        )
+    );
+    echo html_writer::end_tag('div');
+} else {
+    echo html_writer::tag('div', $_s('no_items'), array(
+        'id' => 'block_scantron_upload_error'
+    ));
+}
+
+if ($exams) {
+    echo "<br />";
+    echo $OUTPUT->heading($_s('files'), 2);
+    echo $files_table_src;
+} else {
+    echo "<br />";
+    echo html_writer::tag('div', $_s('no_files'), array(
+        'id' => 'block_scantron_files_error'
+    ));
+}
 
 echo $OUTPUT->footer();
