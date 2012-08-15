@@ -171,7 +171,7 @@ if ($exam_options) {
 }
 
 if ($error_str) {
-    echo $error_str;
+    echo $OUTPUT->notification($error_str);
 } else {
     $inivis = array('class' => 'scinvisitext');
 
