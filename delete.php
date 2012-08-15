@@ -92,7 +92,7 @@ echo html_writer::tag('form',
         'type' => 'submit',
         'value' => $_s('delete')
     )), array(
-        'action' => 'delete.php?id=' . $courseid . '&amp;examid=' . $examid,
+        'action' => 'delete.php?id=' . $courseid . '&examid=' . $examid,
         'method' => 'POST'
     ));
 echo html_writer::end_tag('div');
