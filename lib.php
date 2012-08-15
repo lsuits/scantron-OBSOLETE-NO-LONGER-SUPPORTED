@@ -172,13 +172,12 @@ function generate_form_facsimile($examid, $userid, $courseid) {
 
     $fullname = fullname($DB->get_record('user', array('id' => $userid)));
 
-    $shortname = $DB->get_field('course', 'shortname', array('id' => $courseid));
-    $dept_and_number = get_formatted_shortname($shortname);
+    $name = $DB->get_field('course', 'fullname', array('id' => $courseid));
 
     $itemid = $DB->get_field('block_scantron_exams', 'itemid', array('id' => $examid));
     $itemname = $DB->get_field('grade_items', 'itemname', array('id' => $itemid));
 
-    $subject =  $dept_and_number . ' ' . $itemname;
+    $subject =  $name . ' ' . $itemname;
 
     $out .= "
                     <table class = 'scantron'>
